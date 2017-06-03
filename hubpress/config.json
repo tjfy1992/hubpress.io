@@ -30,8 +30,8 @@
     "logo": "",
     "cover": "",
     "delay": "",
-    "postsPerPage": "",
-    "googleAnalytics": "",
+    "postsPerPage": "6",
+    "googleAnalytics": "UA-100368556-1",
     "disqus": ""
   },
   "socialnetwork": {
