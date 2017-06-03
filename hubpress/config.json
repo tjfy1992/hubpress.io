@@ -6,12 +6,12 @@
     "cname": ""
   },
   "theme": {
-    "name": "saga"
+    "name": "uno"
   },
   "urls": {
     "site": "https://tjfy1992.github.io",
     "hubpress": "https://tjfy1992.github.io",
-    "theme": "//tjfy1992.github.io/themes/casper",
+    "theme": "//tjfy1992.github.io/themes/saga",
     "images": "https://tjfy1992.github.io/images"
   },
   "initialisationConfigComponent": {
