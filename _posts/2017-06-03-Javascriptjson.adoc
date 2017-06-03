@@ -1,0 +1,93 @@
+# Javascript用递归的方式遍历json数组
+
+## 前言
+Javscript语言有很多值得探究和注意的地方，下面我们来看一下用递归的方式遍历JSON对象数组。
+
+
+## 正文
+假设我们的要遍历的数组是这样的：
+
+```javascript
+var array = [
+			{
+				id: 1,
+				children:[{
+						id:2,
+						children:[]
+					}]
+			},
+			
+			{
+				id:3,
+				children:[]
+			},
+			
+			{
+				id:4,
+				children:[
+					{
+						id:5,
+						children:[
+							{
+								id:6,
+								children:[]
+							},
+							
+							{
+								id:7,
+								children:[]
+							}
+						]
+					}
+				]
+			}
+		];
+```
+这是一个数组,假如我们想找出id为7的对象，可以用如下的函数：
+
+```javascript
+		var find = function(arr, id){
+			arr.forEach((item) => {	
+	    		 if(item.id==id)
+	    		 {		  
+	    			 return item;
+	    		 }
+	    		 else if(item.children.length > 0)
+	    		 {
+	    			 find(item.children, id);		    			 
+	    		 }		    		 
+	  	    })
+		}
+		var item = find(array, 7);
+		console.log(item);
+```
+看起来没什么问题，只是简单的递归，但是最后得到的输出却是undefined。这是因为函数里的return语句，所返回的其实是arr.forEach这个匿名函数的返回值，而我们所调用的find函数实际上却没有返回值，所以当我们输出item的时候会得到undefined。这里的解决方法是，在函数外面定义一个变量，然后在函数语句中return之前，把找到的对象赋给这个变量：
+
+```javascript
+	    var returnedItem;
+		
+		var find = function(arr, id){
+			arr.forEach((item) => {	
+	    		 if(item.id==id)
+	    		 {		  
+	    			 returnedItem = item;
+	    			 return item;
+	    		 }
+	    		 else if(item.children.length > 0)
+	    		 {
+	    			 find(item.children, id);		    			 
+	    		 }		    		 
+	  	    })
+		}
+		
+		var item = find(array, 7);
+		console.log(returnedItem);
+```
+修改后的输出为
+
+image::http://img.blog.csdn.net/20170510162709027?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+这样一切就正常了。
+
+## 结尾
+出现这样的情况主要还是因为javascript对于return这个关键字的处理和java语言稍有不同。在上面的修改后的代码中，其实完全省略掉return语句，因为每个对象的id是唯一的，returnedItem在被赋值以后也不会再变化。这里的return只是起到了一个跳出循环的作用，在遍历量很大的时候可以保留下来，这样在我们遍历到想要的item之后可以让程序省去遍历剩余数组的步骤，提高效率。
