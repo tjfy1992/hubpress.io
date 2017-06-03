@@ -59,7 +59,7 @@ image::http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb
 	</style>
 ```
 
-HTML body
+HTML body代码
 
 ```
     <div id="test">		        
@@ -139,6 +139,7 @@ HTML body
     <footer align="center">
         <p>&copy; Vue.js 2.0 + ElementUI分页Demo</p>
     </footer>
+    
 ```
 
 接下来是比较重要的创建vue实例。这里使用ES5的写法。
