@@ -1,9 +1,3 @@
-// = Your Blog title
-// See https://hubpress.gitbooks.io/hubpress-knowledgebase/content/ for information about the parameters.
-// :hp-image: /covers/cover.png
-// :published_at: 2019-01-31
-// :hp-tags: HubPress, Blog, Open_Source,
-// :hp-alt-title: My English Title
 # Vue2.0+ElementUI+PageHelper实现的表格分页
 
 ### 前言
@@ -15,17 +9,16 @@
 - **VueJS 2.0**
 - **ElementUI**
 
-
-后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，本质上是加了两个limit的参数。对于PageHelper的配置和用法，请参考joker_zhou写的[Spring + Mybatis 使用 PageHelper 插件分页][1]这篇文章，这里不再赘述。
+后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，本质上是加了两个limit的参数。对于PageHelper的配置和用法，请参考joker_zhou写的
+[http://blog.csdn.net/joker_zhou/article/details/50418005[Spring + Mybatis 使用 PageHelper 插件分页]]这篇文章，这里不再赘述。
 
 前端所使用的是最近很火的vuejs框架2.0，这是一个mvvm架构的框架，类似于AngularJS，但是更加轻量。UI框架使用的是由饿了么团队推出的elementUI框架，这是一款基于vuejs的框架，正好和我们的前端框架完美结合，并且封装了很多组件，开发起来很方便。
 下面就是这个Demo的截图，实现了基本的增删改查功能，表格排序是elementUI的表格控件里自带的一个属性，可以很方便的设置。
 
 ### 正文
 下面是程序的截图，右键在新标签页中打开图片可以看得清楚些。
-<center>
-(http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
+
+image::http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
 
 下面来看一下前端的代码，首先是引入的文件：
 
@@ -37,7 +30,7 @@
 	<script src="./js/vue-resource.js"></script>
 	<script src="./element-ui/lib/index.js"></script>
 ```
-其中第一行和最后一行是ElementUI的导入包，可以从[ElementUI官网][2]下载到源文件引入，也可以直接使用CDN的方式来引入：
+其中第一行和最后一行是ElementUI的导入包，可以从[http://element.eleme.io/#/zh-CN/component/installation[ElementUI官网]]下载到源文件引入，也可以直接使用CDN的方式来引入：
 ```
 <!-- 引入样式 -->
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
@@ -50,19 +43,19 @@
 
 ```
 	<style>
-	  .el-select .el-input {
-	    width: 110px;
-	  }
+              .el-select .el-input {
+                width: 110px;
+              }
 
-  	  .el-table .info-row {
-    		background: #c9e5f5;
-      }	  
-      
-      #top {
-	      background:#20A0FF;
-	      padding:5px;
-	      overflow:hidden
-      }
+              .el-table .info-row {
+                    background: #c9e5f5;
+              }	  
+
+              #top {
+                  background:#20A0FF;
+                  padding:5px;
+                  overflow:hidden
+              }
 	</style>
 ```
 
@@ -153,7 +146,7 @@ HTML body
 ```
 	<script>
 	var vue = new Vue({			
-			el:"#test",
+		    el:"#test",
 		    data: {		  
 		    	//表格当前页数据
 		    	tableData: [],
@@ -188,9 +181,9 @@ HTML body
 
 		    methods: {
 		    	
-		        //从服务器读取数据
+                		//从服务器读取数据
 				loadData: function(criteria, pageNum, pageSize){					
-					this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
+				this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
                 		this.tableData = res.data.pagestudentdata;
                 		this.totalCount = res.data.number;
                 	},function(){
@@ -198,7 +191,7 @@ HTML body
                 	});					
 				},
 		    	
-				//多选响应
+			    //多选响应
 			    handleSelectionChange: function(val) {
 			        this.multipleSelection = val;
 			    },
@@ -351,16 +344,10 @@ Controller中的map我们可以看到put了两个值，一个是返回的List，
 
 
 ### 写在最后的话
-vuejs作为一个前端控件，在最近几年越来越受欢迎，它的社区很活跃，同时又有大量的开源项目库与之配套，详细列表请参考[Vue 开源项目库汇总][3]。如果将vuejs与开源库整合使用，将大大提升前端开发效率，尤其是对于像我这样对前端并不是很熟悉的后端工程师，也是可以对照着官网上面的教程和例子进行前端开发。如果使用ES6的写法，那么模块化会更加轻松。
+vuejs作为一个前端控件，在最近几年越来越受欢迎，它的社区很活跃，同时又有大量的开源项目库与之配套，详细列表请参考[http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651551975&idx=1&sn=7eb0e564b8c451b9662e174913de303f&chksm=8025af26b75226300164df811736abe65dac6cb3597cea86a809c2352d2459a16068d4e00b13&mpshare=1&scene=1&srcid=0414nRm1dVPE7iutDEJt0SDJ#rd[Vue 开源项目库汇总]]。如果将vuejs与开源库整合使用，将大大提升前端开发效率，尤其是对于像我这样对前端并不是很熟悉的后端工程师，也是可以对照着官网上面的教程和例子进行前端开发。如果使用ES6的写法，那么模块化会更加轻松。
 
 ElementUI也是一套很不错的组件库，对于我们经常用到的表格、表单、时间日期选择器等常用组件都有着很好的封装和接口。
 
 PageHelper作为一个国人写的mybatis分页插件，有着相当不错的表现，并且支持当前所有的主流数据库，使用起来也很方便。
 
 前端开发所需要学习的东西并不比后端开发少多少，而且更需要一个经验的积累，在此记录一下学习前端开发的历程。
-
----------
-
-[1]: http://blog.csdn.net/joker_zhou/article/details/50418005
-[2]: http://element.eleme.io/#/zh-CN/component/installation
-[3]: http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651551975&idx=1&sn=7eb0e564b8c451b9662e174913de303f&chksm=8025af26b75226300164df811736abe65dac6cb3597cea86a809c2352d2459a16068d4e00b13&mpshare=1&scene=1&srcid=0414nRm1dVPE7iutDEJt0SDJ#rd
