@@ -62,78 +62,78 @@ image::http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb
 HTML body代码
 
 ```
-    <div id="test">		        
+  <div id="test">		        
 
-		<div id="top">			
-			<span style="float:right;">	
-				<el-button type="text" @click="add" style="color:white">添加</el-button>	
-				<el-button type="text" @click="deletenames" style="color:white">批量删除</el-button>		
-			</span>						
-		</div>	
+        <div id="top">			
+          <span style="float:right;">	
+              <el-button type="text" @click="add" style="color:white">添加</el-button>	
+              <el-button type="text" @click="deletenames" style="color:white">批量删除</el-button>		
+          </span>						
+        </div>	
 		
 		
-		<br/>
+	<br/>
 
         <div style="margin-top:15px">
-           <el-input placeholder="请输入内容" v-model="criteria" style="padding-bottom:10px;">
-			  <el-select v-model="select" slot="prepend" placeholder="请选择">
-			     <el-option label="id" value="1"></el-option>
-			     <el-option label="name" value="2"></el-option>
-			  </el-select>
-			  <el-button slot="append" icon="search" v-on:click="search"></el-button>
-		  </el-input>  		
+             <el-input placeholder="请输入内容" v-model="criteria" style="padding-bottom:10px;">
+                <el-select v-model="select" slot="prepend" placeholder="请选择">
+                   <el-option label="id" value="1"></el-option>
+                   <el-option label="name" value="2"></el-option>
+                </el-select>
+                <el-button slot="append" icon="search" v-on:click="search"></el-button>
+            </el-input>  		
 
-		  <el-table
-		    ref="testTable"		  
-		    :data="tableData"
-		    style="width:100%"
-		    border
-		    :default-sort = "{prop: 'id', order: 'ascending'}"
-		    @selection-change="handleSelectionChange"	
-		    @row-click="handleclick"
-		    :row-class-name = "tableRowClassName"
-		    >
-		    <el-table-column
-		      type="selection"
-		      >
-		    </el-table-column>
-		    <el-table-column
-		      prop="id"
-		      label="Id"
-		      sortable
-		      show-overflow-tooltip>
-		    </el-table-column>
-		    <el-table-column
-		      prop="name"
-		      label="姓名"
-		      sortable>
-		    </el-table-column>
-	        <el-table-column label="操作">
-		      <template scope="scope">
-		        <el-button
-		          size="small"
-		          type="primary"
-		          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-		        <el-button
-		          size="small"
-		          type="danger"
-		          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-		      </template>
-		    </el-table-column>
-		  </el-table>
+            <el-table
+              ref="testTable"		  
+              :data="tableData"
+              style="width:100%"
+              border
+              :default-sort = "{prop: 'id', order: 'ascending'}"
+              @selection-change="handleSelectionChange"	
+              @row-click="handleclick"
+              :row-class-name = "tableRowClassName"
+              >
+              <el-table-column
+                type="selection"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="id"
+                label="Id"
+                sortable
+                show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column
+                prop="name"
+                label="姓名"
+                sortable>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template scope="scope">
+                  <el-button
+                    size="small"
+                    type="primary"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
 		  
-		  <div align="center">
-			  <el-pagination
-			      @size-change="handleSizeChange"
-			      @current-change="handleCurrentChange"
-			      :current-page="currentPage"
-			      :page-sizes="[10, 20, 30, 40]"
-			      :page-size="pagesize"
-			      layout="total, sizes, prev, pager, next, jumper"
-			      :total="totalCount">
-			  </el-pagination>
-		  </div>
-		</div> 
+            <div align="center">
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="pagesize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="totalCount">
+                </el-pagination>
+            </div>
+      	</div> 
     </div>
 	
     <footer align="center">
@@ -145,160 +145,160 @@ HTML body代码
 接下来是比较重要的创建vue实例。这里使用ES5的写法。
 
 ```
-	<script>
-	var vue = new Vue({			
-		    el:"#test",
-		    data: {		  
-		    	//表格当前页数据
-		    	tableData: [],
-		    	
-		    	//多选数组
-		        multipleSelection: [],
-		        
-		        //请求的URL
-		        url:'newstu/querystudentbypage',
-		        
-		        //搜索条件
-		        criteria: '',
-		        
-		        //下拉菜单选项
-		        select: '',
-		        
-		        //默认每页数据量
-		        pagesize: 10,
-		        
-		        //默认高亮行数据id
-		        highlightId: -1,
-		        
-		        //当前页码
-		        currentPage: 1,
-		        
-		        //查询的页码
-		        start: 1,
-		        
-		        //默认数据总数
-		        totalCount: 1000,
-		    },
+  <script>
+    var vue = new Vue({			
+            el:"#test",
+            data: {		  
+                //表格当前页数据
+                tableData: [],
 
-		    methods: {
-		    	
-                		//从服务器读取数据
-				loadData: function(criteria, pageNum, pageSize){					
-				this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
-                		this.tableData = res.data.pagestudentdata;
-                		this.totalCount = res.data.number;
-                	},function(){
-                  		console.log('failed');
-                	});					
-				},
-		    	
-			    //多选响应
-			    handleSelectionChange: function(val) {
-			        this.multipleSelection = val;
-			    },
-			    
-			    //点击行响应
-			    handleclick: function(row, event, column){
-			    	this.highlightId = row.id;
-			    },
-					
-			    //编辑
-				handleEdit: function(index, row) {
-				    this.$prompt('请输入新名称', '提示', {
-		                  confirmButtonText: '确定',
-		                  cancelButtonText: '取消',
-		                }).then(({ value }) => {
-		                	if(value==''||value==null)
-		        				return;
-		        			this.$http.post('newstu/update',{"id":row.id,"name":value},{emulateJSON: true}).then(function(res){
-		        				this.loadData(this.criteria, this.currentPage, this.pagesize);	        					
-		                    },function(){
-		                        console.log('failed');
-		                    });
-		                }).catch(() => {
+                //多选数组
+                multipleSelection: [],
 
-		            });
-		        },
-		        
-				      
-		        //单行删除
-			    handleDelete: function(index, row) {
-			        var array = [];
-		        	array.push(row.id);
-					this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
-						this.loadData(this.criteria, this.currentPage, this.pagesize);
-		            },function(){
-		                console.log('failed');
-		            });
-		        },
-		        
-		        //搜索
-		        search: function(){
-		        	this.loadData(this.criteria, this.currentPage, this.pagesize);
-		        },
-		        
-		        //添加
-		        add: function(){
-		                this.$prompt('请输入名称', '提示', {
-		                  confirmButtonText: '确定',
-		                  cancelButtonText: '取消',
-		                }).then(({ value }) => {
-		                	if(value==''||value==null)
-		        				return;
-		        			this.$http.post('newstu/add',{"name":value},{emulateJSON: true}).then(function(res){
-		        				this.loadData(this.criteria, this.currentPage, this.pagesize);
-		                    },function(){
-		                        console.log('failed');
-		                    });
-		                }).catch(() => {
- 
-		            });
-		              
-		        },
-		        
-		        //多项删除
-		        deletenames: function(){
-		        	if(this.multipleSelection.length==0)
-		        		return;
-		        	var array = [];
-		        	this.multipleSelection.forEach((item) => {
-		        		array.push(item.id);
-			        })
-					this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
-						this.loadData(this.criteria, this.currentPage, this.pagesize);
-		            },function(){
-		                console.log('failed');
-		            });
-		        },
-		      
-		        //改变当前点击的行的class，高亮当前行
-		        tableRowClassName: function(row, index){
-		    	   if(row.id == this.highlightId)
-		    	   {
-		    		  return 'info-row';
-		    	   }
-		        },
-		      
-		        //每页显示数据量变更
-		        handleSizeChange: function(val) {
-		            this.pagesize = val;
-		            this.loadData(this.criteria, this.currentPage, this.pagesize);
-		        },
-		        
-		        //页码变更
-		        handleCurrentChange: function(val) {
-		            this.currentPage = val;
-		            this.loadData(this.criteria, this.currentPage, this.pagesize);
-		        },	      
-		        		        
-		    },	    
-		    
-		    
-		  });
-	
-		  //载入数据
-    	  vue.loadData(vue.criteria, vue.currentPage, vue.pagesize);
-	</script>  
+                //请求的URL
+                url:'newstu/querystudentbypage',
+
+                //搜索条件
+                criteria: '',
+
+                //下拉菜单选项
+                select: '',
+
+                //默认每页数据量
+                pagesize: 10,
+
+                //默认高亮行数据id
+                highlightId: -1,
+
+                //当前页码
+                currentPage: 1,
+
+                //查询的页码
+                start: 1,
+
+                //默认数据总数
+                totalCount: 1000,
+            },
+
+          methods: {
+
+              //从服务器读取数据
+              loadData: function(criteria, pageNum, pageSize){					
+                this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
+                        this.tableData = res.data.pagestudentdata;
+                        this.totalCount = res.data.number;
+                    },function(){
+                        console.log('failed');
+                    });					
+              },
+
+              //多选响应
+              handleSelectionChange: function(val) {
+                  this.multipleSelection = val;
+              },
+
+              //点击行响应
+              handleclick: function(row, event, column){
+                  this.highlightId = row.id;
+              },
+
+              //编辑
+              handleEdit: function(index, row) {
+                  this.$prompt('请输入新名称', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                      }).then(({ value }) => {
+                          if(value==''||value==null)
+                              return;
+                          this.$http.post('newstu/update',{"id":row.id,"name":value},{emulateJSON: true}).then(function(res){
+                              this.loadData(this.criteria, this.currentPage, this.pagesize);	        					
+                          },function(){
+                              console.log('failed');
+                          });
+                      }).catch(() => {
+
+                  });
+              },
+
+
+              //单行删除
+              handleDelete: function(index, row) {
+                  var array = [];
+                  array.push(row.id);
+                  this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
+                      this.loadData(this.criteria, this.currentPage, this.pagesize);
+                  },function(){
+                      console.log('failed');
+                  });
+              },
+
+              //搜索
+              search: function(){
+                  this.loadData(this.criteria, this.currentPage, this.pagesize);
+              },
+
+              //添加
+              add: function(){
+                      this.$prompt('请输入名称', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                      }).then(({ value }) => {
+                          if(value==''||value==null)
+                              return;
+                          this.$http.post('newstu/add',{"name":value},{emulateJSON: true}).then(function(res){
+                              this.loadData(this.criteria, this.currentPage, this.pagesize);
+                          },function(){
+                              console.log('failed');
+                          });
+                      }).catch(() => {
+
+                  });
+
+              },
+
+              //多项删除
+              deletenames: function(){
+                  if(this.multipleSelection.length==0)
+                      return;
+                  var array = [];
+                  this.multipleSelection.forEach((item) => {
+                      array.push(item.id);
+                  })
+                  this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
+                      this.loadData(this.criteria, this.currentPage, this.pagesize);
+                  },function(){
+                      console.log('failed');
+                  });
+              },
+
+              //改变当前点击的行的class，高亮当前行
+              tableRowClassName: function(row, index){
+                 if(row.id == this.highlightId)
+                 {
+                    return 'info-row';
+                 }
+              },
+
+              //每页显示数据量变更
+              handleSizeChange: function(val) {
+                  this.pagesize = val;
+                  this.loadData(this.criteria, this.currentPage, this.pagesize);
+              },
+
+              //页码变更
+              handleCurrentChange: function(val) {
+                  this.currentPage = val;
+                  this.loadData(this.criteria, this.currentPage, this.pagesize);
+              },	      
+
+          },	    
+
+
+        });
+
+          //载入数据
+          vue.loadData(vue.criteria, vue.currentPage, vue.pagesize);
+  </script>  
 ```
 
 现在对上述代码进行一个简单的解释，tableData是表格当前页所显示的数据的数组，当网页加载出来后，首先执行loadData方法，criteria是当前的搜索条件，默认为空，第二个参数是当前页码，默认为第一页，第三个参数为偏移量，即想查询的数量，也就是当前每页所含有的数据量。当页码或每页数据量改变时都会以这些参数的新值作为参数重新调用这个方法。我们可以看一下Controller的代码：
