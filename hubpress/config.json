@@ -11,7 +11,7 @@
   "urls": {
     "site": "https://tjfy1992.github.io",
     "hubpress": "https://tjfy1992.github.io",
-    "theme": "//tjfy1992.github.io/themes/saga",
+    "theme": "//tjfy1992.github.io/themes/uno",
     "images": "https://tjfy1992.github.io/images"
   },
   "initialisationConfigComponent": {
@@ -25,7 +25,7 @@
     ]
   },
   "site": {
-    "title": "",
+    "title": "tjfy1992's blog",
     "description": "",
     "logo": "",
     "cover": "",
