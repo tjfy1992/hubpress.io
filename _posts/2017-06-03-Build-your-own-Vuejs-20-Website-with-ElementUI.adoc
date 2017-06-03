@@ -1,4 +1,4 @@
-# Build your own Vuejs 2.0 Website with ElementUI
+# Build your own Vuejs 2.0 Website
 // See https://hubpress.gitbooks.io/hubpress-knowledgebase/content/ for information about the parameters.
 // :hp-image: /covers/cover.png
 // :published_at: 2019-01-31
@@ -19,29 +19,24 @@ Here are something that we need to build a website:
 ## Text
 ### Installation of nodeJS and npm
 
-As we need to use tha package manager 'npm', we need to install nodeJS. In fact, npm is a module of nodeJS, and has already been integrated into the nodeJS installer. We can visit https://nodejs.org/en/[Offcial Site of NodeJS] and download the newest edition for our OS.
-由于我们要使用npm这个包管理器，所以要安装nodeJS。现在版本的nodeJS已经集成了npm，所以我们只需要安装一次即可。我们访问[nodejs中文网](http://nodejs.cn/download/)，下载对应自己系统的版本就可以了。这里我们下载Windows系统的64位zip文件，下载完成后解压，可以看到里面有一个node.exe的可执行文件。
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526105340587?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+As we need to use tha package manager 'npm', we need to install nodeJS. In fact, npm is a module of nodeJS, and has already been integrated into the nodeJS installer. We can visit https://nodejs.org/en/[Offcial Site of NodeJS] and download the newest version for our OS. Here I download teh zip file for win64, and unzip it after downloading, and then we can see a node.exe in the directory.
 
-我们把当前的目录加入到系统环境变量的path里面。然后打开cmd命令行，输入npm -v，如果出现如下图的显示，说明已经安装正确。
-<center>
-![npm](http://img.blog.csdn.net/20170526105220442?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
+image::http://img.blog.csdn.net/20170526105340587?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
 
-这样我们以后就可以在硬盘中任何一个位置里使用npm命令了。
+One more step for Windows user to do is to add the current directory's path into the 'Path' of System Environment Variables. And then we open the 'cmd', and input npm -v. If you see the output like below, then nodeJS is succesfully installed and configured in your computer.
 
-### 安装Webstorm
-Webstorm是一款专门用于前端开发的IDE，在其最新的版本中已经有了对vuejs的语法支持。我们进入[Webstorm的官方网站](http://www.jetbrains.com/webstorm/)下载webstorm的最新版本，安装之后，会提示我们需要激活，我们按下图中的输入，点击activate就可以了。
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526110119782?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
+image::http://img.blog.csdn.net/20170526105220442?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
 
-激活成功之后进入webstorm，此时我们已经可以进行开发了，不过我们首先要把vue component的模版加入到模版库中，这样以后我们每次新建一个.vue后缀的文件，都不需要先手动添加一些默认的代码。点击左上角File->New->Edit File Templates，在弹出的对话框中点击左上角的绿色加号，然后按照如图显示填写Name和Extension，
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526110813307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+And from now on we could use npm in any directory and path.
 
-在下方橙色区域的代码段内填写
+### Install Webstorm
+Webstorm is an excellent IDE for Front-end development. In the newest version of Webstorm Vue is supported by default and syntax highlighting. We can visit http://www.jetbrains.com/webstorm/[Webstorm's offical web] to download the IDE.
+
+After we enter Webstorm, there is one more thing we need to do before starting to write code. We need to add the template of VUE to the template library so that we don't need to write some default code every time when we create a vue component. At the lefttop of the IDE, we click FILE->New->Edit File Templates, and click the green 'plus' icon on the rightop, and input the Name and Extension for the template:
+
+image::http://img.blog.csdn.net/20170526110813307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+And then add the following code into the code area below
 
 ```
 <template>
@@ -59,51 +54,47 @@ Webstorm是一款专门用于前端开发的IDE，在其最新的版本中已经
 </script>
 
 ```
-然后点击apply，再点击ok即可。现在我们再次点击左上角File->New，可以看到刚才创建的vue template已经出现了。我们点击vue template，名称填写test，可以看到新创建的文件就是刚才我们创建的模版的样子，如图。
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526111206187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
 
-我们可以看到这个模版里面使用的ES6的写法，而我们当前的IDE默认支持的是ES5，这里我们点击左上角File->Settings，然后下图设置:
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526111848071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
+Then click apply, and click ok. Now we click the File->New on the lefttop again, and we can see the Vue Component that we created just now. We choose it, and input 'test' for its name, then we can see the code in the new file, just as we wrote before.
 
-然后点击apply即可。
+image::http://img.blog.csdn.net/20170526111206187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
 
-### 创建ElementUI工程
-目前ES5仍属于主流写法，而我们要使用ES6，需要用到babel来将ES6的语法转换回ES5的写法，然后用webpack进行打包等等一些列操作。不过我们不需要自己去配置这些东西，如果是普通的vuejs工程，我们可以使用一个叫做vue-cli的脚手架工具生成vuejs工程，而我们现在使用的是vuejs+ElementUI，所以我们可以从ElementUI的官网里找到通用的项目模版。地址在[ElementUI的GitHub](https://github.com/ElementUI/element-starter)，我们只要下载这个工程即可。下载解压之后，在webstorm中点击File->Open，打开刚才下载的工程。打开之后可以看到工程结构如下图：
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526112758965?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
+You may notice that the component is written with Javascript ES6, but the IDE supports ES5 by default. So we need to click File->Settings, and change the settings like following:
 
-可以看到里面已经集成了bable、webpack等插件。不需要我们自己去配置。我们导入这个工程之后，需要做的一件事就是将npm模块安装到这个目录下。我们打开命令行，进入当前工程的根目录，然后输入
+
+image::http://img.blog.csdn.net/20170526111848071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+Then click apply, and click OK.
+
+### Create a project of ElementUI
+ES5 is still the majority these days, and not all the browser support ES6. We need babel to translate the ES6 back into ES5, and package the files using webpack. Sounds complicated, right? Don't worry, we don't need to configure these tools by ourself. If we are buliding an ordinary vue project, we could use vue-cli which automatically generates what we need for us. But right now we are creating an ElementUI project based on Vue, things become really simple. There is a general project template at https://github.com/ElementUI/element-starter[ElementUI team's Github]. We download the template, unzip it, done.
+The stucture of the project is like following:
+
+image::http://img.blog.csdn.net/20170526112758965?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+All the tools are already in it. Now we install npm modules into the directory. In the 'cmd', we enter the current directory, and input
 
 ```
 npm install
 ```
-如果安装速度较慢，可以使用npm依赖包在国内由阿里云提供的镜像，如下所示
 
-```
-npm install --registry=http://registry.npm.taobao.org
-```
-
-点击回车。
-
-安装结束后我们可以看到工程目录下多了一个node_modules的文件夹，该文件夹就是工程的依赖包所在。以后我们如果想添加依赖包，就可以继续用上文的指令，例如如果想加入vue-router，那么需要输入
+After the installation we can see that there is a new directory called node_modules in our project. That is where the dependency packages are. If we want to add a new dependency in the future, we run the code above again followed by the package that we want to install, followed by --save. For example, if we want to add vue-router, then input 
 
 ```
 npm install vue-router --save
 ```
-npm会自动寻找最新版本的依赖包进行安装。
+npm will automatically find the newest version of the package and install it.
 
-###工程打包运行
-安装好依赖之后，我们可以对工程进行打包和运行。我们仍然是使用命令行，进入当前工程的目录，并输入
+
+### Make it run
+
+After installation of the dependencies, we need to package the project and make it run. We input the following:
 
 ```
 npm run dev
 ```
-这段代码的意思就是以本地服务器的端口启动这个工程。关于本地服务器的配置信息，在工程根目录的webpack.config.js中，我们可以在该文件中看到如下代码段：
+
+This means run the project with the localhost. We can see the configuration information in webpack.config.js:
 
 ```
 devServer: {
@@ -119,20 +110,17 @@ devServer: {
       }
     },
 ```
-这里的配置信息写的很清楚，本地的服务器端口为8010，如果我们想改变端口号或主机名，只要改变这里对应的字段即可。
-我们输入npm run dev后，会出现一长串信息，最后会出现webpack: Compiled successfully的字样，代表我们的代码编译成功。这时我们打开浏览器，输入localhost:8010，出现如图所示的网页，表示我们的第一个Vuejs2.0 ＋ElementUI工程已经成功运行。
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526115502649?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-<center>
-点击图中的Let's do it按钮，可以看到右侧有一个提醒消息飘出来，这就是ElementUI中的一个组件。
-<center>
-![这里写图片描述](http://img.blog.csdn.net/20170526115722874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-至此一个简单的基于VueJs2.0和ElementUI的前端网站的雏形已经完成了，接下来的时间我会慢慢介绍构建单页面应用的更多方法和细节。
+As we see, the default port of localhost is 8010. If you want to change the port, just change it here.
 
-## 小结
-Webstorm对于前端语言的支持非常丰富，在2017.1版本之后也更新了对vuejs语法的高亮显示的支持。另外，相对于Eclipse等后端IDE，Webstorm不需要在每次写完代码后手动保存，所有的保存都是实时进行的。对于需要同时开发前端和后端的工程师来说，这是需要注意的一点，如果习惯了webstorm的实时保存，可能会在修改了后端代码后忘记保存。
-还有一点就是npm run dev是热加载，我们执行了这条命令后在webstorm里修改前端代码，响应的变化就会马上显示在前端页面，这也是很方便的一点。
-另外就是关于ES6的问题，ES6是今后的主流，并且自带模块化语句import和export，这对于vuejs的组件化开发是非常有帮助的，而组件化开发会很大程度上提高编程和代码管理的效率。这个系列的文章都会以ES6的写法进行开发。如果你想了解vuejs和ElementUI在ES5的编程方法，可以看我的另一篇博客
-[ Vue2.0+ElementUI+PageHelper实现的表格分页](http://blog.csdn.net/u012907049/article/details/70237457)
-这篇文章里介绍了ES5写法下的vue2.0和ElementUI，以及基于它们的前端增删改查的基本操作和后端pageHelper物理分页的方法。
+After we input 'npm run dev', we wait for a while until it shows webpack: Compiled successfully. Then we open the browser and visit localhost:8010, if you see the page shown below, then congrats, you have successfully build a small website with VUE and ElementUI!
+
+image::http://img.blog.csdn.net/20170526115502649?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+Click the 'Let's do it' button, we can see a message floating on the top right. That is one of the components provided by ElementUI.
+
+image::http://img.blog.csdn.net/20170526115722874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast[]
+
+As it shows, it's time to bulid something epic!
+
+In the next post I will introduce some details to write a navigation page and something about vue-router.
