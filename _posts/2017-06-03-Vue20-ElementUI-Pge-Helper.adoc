@@ -299,6 +299,7 @@ HTML body
     	  vue.loadData(vue.criteria, vue.currentPage, vue.pagesize);
 	</script>  
 ```
+
 现在对上述代码进行一个简单的解释，tableData是表格当前页所显示的数据的数组，当网页加载出来后，首先执行loadData方法，criteria是当前的搜索条件，默认为空，第二个参数是当前页码，默认为第一页，第三个参数为偏移量，即想查询的数量，也就是当前每页所含有的数据量。当页码或每页数据量改变时都会以这些参数的新值作为参数重新调用这个方法。我们可以看一下Controller的代码：
 
 ```java
@@ -314,6 +315,7 @@ HTML body
 		return map;
     } 
 ```
+
 还有service的实现代码：
 
 ```java
@@ -332,6 +334,7 @@ mybatis的代码
     	select id,name from student where id=#{parameter} or name like CONCAT('%',#{parameter},'%')  
     </select>
 ```
+
 注：为了代码的简便，这里对用户的输入进行了模糊处理，数据表中的id字段等于用户的输入或name字段包含了用户的输入都可以被查询出来。
 
 从上面的service实现类和mabatis的代码中可以看出，**我们并没有手动去给sql语句加limit，而是在newstudentMapper.selectStudents(parameter);这句代码之前加入了Page<Student> page = PageHelper.startPage(pageNum, pageSize);这句代码就是对PageHelper的调用，不需要去管PageHelper如何去实现（实际是通过Interceptor），只需要这一句代码就可以做出物理分页。它会对紧跟在它后面的一个sql查询起作用，并且返回分页后的当页代码。**
