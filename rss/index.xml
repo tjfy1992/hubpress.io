@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[tjfy1992's blog]]></title><description><![CDATA[tjfy1992's blog]]></description><link>https://tjfy1992.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Jun 2017 09:01:22 GMT</lastBuildDate><atom:link href="https://tjfy1992.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Vue2.0+ElementUI+PageHelper实现的表格分页]]></title><description><![CDATA[<div class="sect2">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[tjfy1992's blog]]></title><description><![CDATA[tjfy1992's blog]]></description><link>https://tjfy1992.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Jun 2017 09:03:16 GMT</lastBuildDate><atom:link href="https://tjfy1992.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Vue2.0+ElementUI+PageHelper实现的表格分页]]></title><description><![CDATA[<div class="sect2">
 <h3 id="__">前言</h3>
 <div class="paragraph">
 <p>最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种：</p>
@@ -523,4 +523,199 @@ Controller中的map我们可以看到put了两个值，一个是返回的List，
 <p>出现这样的情况主要还是因为javascript对于return这个关键字的处理和java语言稍有不同。在上面的修改后的代码中，其实完全省略掉return语句，因为每个对象的id是唯一的，returnedItem在被赋值以后也不会再变化。这里的return只是起到了一个跳出循环的作用，在遍历量很大的时候可以保留下来，这样在我们遍历到想要的item之后可以让程序省去遍历剩余数组的步骤，提高效率。</p>
 </div>
 </div>
-</div>]]></description><link>https://tjfy1992.github.io/2017/06/03/Javascriptjson.html</link><guid isPermaLink="true">https://tjfy1992.github.io/2017/06/03/Javascriptjson.html</guid><pubDate>Sat, 03 Jun 2017 00:00:00 GMT</pubDate></item></channel></rss>
+</div>]]></description><link>https://tjfy1992.github.io/2017/06/03/Javascriptjson.html</link><guid isPermaLink="true">https://tjfy1992.github.io/2017/06/03/Javascriptjson.html</guid><pubDate>Sat, 03 Jun 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Build your own Vuejs 2.0 Website]]></title><description><![CDATA[<div class="sect1">
+<h2 id="_before_started">Before Started</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Vue became more and more popular as a javascript framework in the recent years, a large amount of companies have chosen it as a main part of their website development plan. As a lightweight framework, Vue is easy to learn and use, which makes it simpler than ever to build a website. In addition, many UI libraries based on VUE are open-source and available with detailed documents. The one that we introduce today would be ElementUI, which is one of the open-source UI libraries presented by ELE.ME, a food ordering and delivery O2O platform. Here are the official websites for VUE and ElementUI: <a href="https://vuejs.org/">Vuejs</a> and <a href="http://element.eleme.io/#/en-US/component/installation/">ElementUI</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here are something that we need to build a website:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>NodeJS(npm)</p>
+</li>
+<li>
+<p>Webstorm (IDE for Vue)</p>
+</li>
+<li>
+<p>Nginx(proxy server)</p>
+</li>
+<li>
+<p>Eclipse(IDE for java)</p>
+</li>
+<li>
+<p>Windows 10(or whatever OS you prefer for development)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_text">Text</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_of_nodejs_and_npm">Installation of nodeJS and npm</h3>
+<div class="paragraph">
+<p>As we need to use tha package manager 'npm', we need to install nodeJS. In fact, npm is a module of nodeJS, and has already been integrated into the nodeJS installer. We can visit <a href="https://nodejs.org/en/">Offcial Site of NodeJS</a> and download the newest version for our OS. Here I download teh zip file for win64, and unzip it after downloading, and then we can see a node.exe in the directory.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526105340587?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>One more step for Windows user to do is to add the current directory&#8217;s path into the 'Path' of System Environment Variables. And then we open the 'cmd', and input npm -v. If you see the output like below, then nodeJS is succesfully installed and configured in your computer.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526105220442?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>And from now on we could use npm in any directory and path.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_webstorm">Install Webstorm</h3>
+<div class="paragraph">
+<p>Webstorm is an excellent IDE for Front-end development. In the newest version of Webstorm Vue is supported by default and syntax highlighting. We can visit <a href="http://www.jetbrains.com/webstorm/">Webstorm&#8217;s offical web</a> to download the IDE.</p>
+</div>
+<div class="paragraph">
+<p>After we enter Webstorm, there is one more thing we need to do before starting to write code. We need to add the template of VUE to the template library so that we don&#8217;t need to write some default code every time when we create a vue component. At the lefttop of the IDE, we click FILE&#8594;New&#8594;Edit File Templates, and click the green 'plus' icon on the rightop, and input the Name and Extension for the template:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526110813307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>And then add the following code into the code area below</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;template&gt;
+    &lt;div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script type="text/ecmascript-6"&gt;
+    export default {
+        data(){
+            return {
+
+            }
+        }
+    }
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then click apply, and click ok. Now we click the File&#8594;New on the lefttop again, and we can see the Vue Component that we created just now. We choose it, and input 'test' for its name, then we can see the code in the new file, just as we wrote before.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526111206187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>You may notice that the component is written with Javascript ES6, but the IDE supports ES5 by default. So we need to click File&#8594;Settings, and change the settings like following:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526111848071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>Then click apply, and click OK.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_a_project_of_elementui">Create a project of ElementUI</h3>
+<div class="paragraph">
+<p>ES5 is still the majority these days, and not all the browser support ES6. We need babel to translate the ES6 back into ES5, and package the files using webpack. Sounds complicated, right? Don&#8217;t worry, we don&#8217;t need to configure these tools by ourself. If we are buliding an ordinary vue project, we could use vue-cli which automatically generates what we need for us. But right now we are creating an ElementUI project based on Vue, things become really simple. There is a general project template at <a href="https://github.com/ElementUI/element-starter">ElementUI team&#8217;s Github</a>. We download the template, unzip it, done.
+The stucture of the project is like following:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526112758965?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>All the tools are already in it. Now we install npm modules into the directory. In the 'cmd', we enter the current directory, and input</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>npm install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After the installation we can see that there is a new directory called node_modules in our project. That is where the dependency packages are. If we want to add a new dependency in the future, we run the code above again followed by the package that we want to install, followed by --save. For example, if we want to add vue-router, then input</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>npm install vue-router --save</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>npm will automatically find the newest version of the package and install it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_make_it_run">Make it run</h3>
+<div class="paragraph">
+<p>After installation of the dependencies, we need to package the project and make it run. We input the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>npm run dev</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means run the project with the localhost. We can see the configuration information in webpack.config.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>devServer: {
+    host: '127.0.0.1',
+    port: 8010,
+    proxy: {
+      '/api/': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we see, the default port of localhost is 8010. If you want to change the port, just change it here.</p>
+</div>
+<div class="paragraph">
+<p>After we input 'npm run dev', we wait for a while until it shows webpack: Compiled successfully. Then we open the browser and visit localhost:8010, if you see the page shown below, then congrats, you have successfully build a small website with VUE and ElementUI!</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526115502649?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>Click the 'Let&#8217;s do it' button, we can see a message floating on the top right. That is one of the components provided by ElementUI.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170526115722874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
+</div>
+<div class="paragraph">
+<p>As it shows, it&#8217;s time to bulid something epic!</p>
+</div>
+<div class="paragraph">
+<p>In the next post I will introduce some details to write a navigation page and something about vue-router.</p>
+</div>
+</div>
+</div>
+</div>]]></description><link>https://tjfy1992.github.io/2017/06/03/Build-your-own-Vuejs-20-Website-with-ElementUI.html</link><guid isPermaLink="true">https://tjfy1992.github.io/2017/06/03/Build-your-own-Vuejs-20-Website-with-ElementUI.html</guid><pubDate>Sat, 03 Jun 2017 00:00:00 GMT</pubDate></item></channel></rss>
