@@ -9,39 +9,39 @@ Javscript语言有很多值得探究和注意的地方，下面我们来看一�
 
 ```javascript
 var array = [
-			{
-				id: 1,
-				children:[{
-						id:2,
-						children:[]
-					}]
-			},
-			
-			{
-				id:3,
-				children:[]
-			},
-			
-			{
-				id:4,
-				children:[
-					{
-						id:5,
-						children:[
-							{
-								id:6,
-								children:[]
-							},
-							
-							{
-								id:7,
-								children:[]
-							}
-						]
-					}
-				]
-			}
-		];
+          {
+              id: 1,
+              children:[{
+                      id:2,
+                      children:[]
+                  }]
+          },
+
+          {
+              id:3,
+              children:[]
+          },
+
+          {
+              id:4,
+              children:[
+                  {
+                      id:5,
+                      children:[
+                          {
+                              id:6,
+                              children:[]
+                          },
+
+                          {
+                              id:7,
+                              children:[]
+                          }
+                      ]
+                  }
+              ]
+          }
+	];
 ```
 这是一个数组,假如我们想找出id为7的对象，可以用如下的函数：
 
