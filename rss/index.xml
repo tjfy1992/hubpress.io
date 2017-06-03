@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://tjfy1992.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Jun 2017 05:37:49 GMT</lastBuildDate><atom:link href="https://tjfy1992.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Vue2.0+ElementUI+PageHelper实现的表格分页]]></title><description><![CDATA[<div class="sect2">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://tjfy1992.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Jun 2017 05:52:34 GMT</lastBuildDate><atom:link href="https://tjfy1992.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Vue2.0+ElementUI+PageHelper实现的表格分页]]></title><description><![CDATA[<div class="sect2">
 <h3 id="__">前言</h3>
 <div class="paragraph">
 <p>最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种：</p>
@@ -23,7 +23,8 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，本质上是加了两个limit的参数。对于PageHelper的配置和用法，请参考joker_zhou写的[Spring + Mybatis 使用 PageHelper 插件分页][1]这篇文章，这里不再赘述。</p>
+<p>后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，本质上是加了两个limit的参数。对于PageHelper的配置和用法，请参考joker_zhou写的
+[<a href="http://blog.csdn.net/joker_zhou/article/details/50418005">Spring + Mybatis 使用 PageHelper 插件分页</a>]这篇文章，这里不再赘述。</p>
 </div>
 <div class="paragraph">
 <p>前端所使用的是最近很火的vuejs框架2.0，这是一个mvvm架构的框架，类似于AngularJS，但是更加轻量。UI框架使用的是由饿了么团队推出的elementUI框架，这是一款基于vuejs的框架，正好和我们的前端框架完美结合，并且封装了很多组件，开发起来很方便。
@@ -33,10 +34,12 @@
 <div class="sect2">
 <h3 id="___2">正文</h3>
 <div class="paragraph">
-<p>下面是程序的截图，右键在新标签页中打开图片可以看得清楚些。
-&lt;center&gt;
-(<a href="http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" class="bare">http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast</a>)
-&lt;center&gt;</p>
+<p>下面是程序的截图，右键在新标签页中打开图片可以看得清楚些。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="SouthEast">
+</div>
 </div>
 <div class="paragraph">
 <p>下面来看一下前端的代码，首先是引入的文件：</p>
@@ -52,7 +55,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>其中第一行和最后一行是ElementUI的导入包，可以从[ElementUI官网][2]下载到源文件引入，也可以直接使用CDN的方式来引入：</p>
+<p>其中第一行和最后一行是ElementUI的导入包，可以从[<a href="http://element.eleme.io/#/zh-CN/component/installation">ElementUI官网</a>]下载到源文件引入，也可以直接使用CDN的方式来引入：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -71,19 +74,19 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>	&lt;style&gt;
-	  .el-select .el-input {
-	    width: 110px;
-	  }
+              .el-select .el-input {
+                width: 110px;
+              }
 
-  	  .el-table .info-row {
-    		background: #c9e5f5;
-      }
+              .el-table .info-row {
+                    background: #c9e5f5;
+              }
 
-      #top {
-	      background:#20A0FF;
-	      padding:5px;
-	      overflow:hidden
-      }
+              #top {
+                  background:#20A0FF;
+                  padding:5px;
+                  overflow:hidden
+              }
 	&lt;/style&gt;</code></pre>
 </div>
 </div>
@@ -178,7 +181,7 @@
 <div class="content">
 <pre class="highlight"><code>	&lt;script&gt;
 	var vue = new Vue({
-			el:"#test",
+		    el:"#test",
 		    data: {
 		    	//表格当前页数据
 		    	tableData: [],
@@ -213,9 +216,9 @@
 
 		    methods: {
 
-		        //从服务器读取数据
+                		//从服务器读取数据
 				loadData: function(criteria, pageNum, pageSize){
-					this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
+				this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
                 		this.tableData = res.data.pagestudentdata;
                 		this.totalCount = res.data.number;
                 	},function(){
@@ -223,7 +226,7 @@
                 	});
 				},
 
-				//多选响应
+			    //多选响应
 			    handleSelectionChange: function(val) {
 			        this.multipleSelection = val;
 			    },
@@ -391,7 +394,7 @@ Controller中的map我们可以看到put了两个值，一个是返回的List，
 <div class="sect2">
 <h3 id="___3">写在最后的话</h3>
 <div class="paragraph">
-<p>vuejs作为一个前端控件，在最近几年越来越受欢迎，它的社区很活跃，同时又有大量的开源项目库与之配套，详细列表请参考[Vue 开源项目库汇总][3]。如果将vuejs与开源库整合使用，将大大提升前端开发效率，尤其是对于像我这样对前端并不是很熟悉的后端工程师，也是可以对照着官网上面的教程和例子进行前端开发。如果使用ES6的写法，那么模块化会更加轻松。</p>
+<p>vuejs作为一个前端控件，在最近几年越来越受欢迎，它的社区很活跃，同时又有大量的开源项目库与之配套，详细列表请参考[<a href="http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551975&amp;idx=1&amp;sn=7eb0e564b8c451b9662e174913de303f&amp;chksm=8025af26b75226300164df811736abe65dac6cb3597cea86a809c2352d2459a16068d4e00b13&amp;mpshare=1&amp;scene=1&amp;srcid=0414nRm1dVPE7iutDEJt0SDJ#rd">Vue 开源项目库汇总</a>]。如果将vuejs与开源库整合使用，将大大提升前端开发效率，尤其是对于像我这样对前端并不是很熟悉的后端工程师，也是可以对照着官网上面的教程和例子进行前端开发。如果使用ES6的写法，那么模块化会更加轻松。</p>
 </div>
 <div class="paragraph">
 <p>ElementUI也是一套很不错的组件库，对于我们经常用到的表格、表单、时间日期选择器等常用组件都有着很好的封装和接口。</p>
@@ -401,12 +404,5 @@ Controller中的map我们可以看到put了两个值，一个是返回的List，
 </div>
 <div class="paragraph">
 <p>前端开发所需要学习的东西并不比后端开发少多少，而且更需要一个经验的积累，在此记录一下学习前端开发的历程。</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>[1]: http://blog.csdn.net/joker_zhou/article/details/50418005
-[2]: http://element.eleme.io/#/zh-CN/component/installation
-[3]: http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551975&amp;idx=1&amp;sn=7eb0e564b8c451b9662e174913de303f&amp;chksm=8025af26b75226300164df811736abe65dac6cb3597cea86a809c2352d2459a16068d4e00b13&amp;mpshare=1&amp;scene=1&amp;srcid=0414nRm1dVPE7iutDEJt0SDJ#rd</pre>
-</div>
 </div>
 </div>]]></description><link>https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html</link><guid isPermaLink="true">https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html</guid><pubDate>Sat, 03 Jun 2017 00:00:00 GMT</pubDate></item></channel></rss>
