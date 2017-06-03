@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Vue2.0+ElementUI+PageHelper实现的表格分页</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="https://tjfy1992.github.io/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//tjfy1992.github.io/themes/casper/assets/css/screen.css?v=1496468269967" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html" />
+    <meta name="referrer" content="origin" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Vue2.0+ElementUI+PageHelper实现的表格分页" />
+    <meta property="og:description" content="前言 最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种： Spring SpringMVC Mybatis VueJS 2.0 ElementUI 后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，" />
+    <meta property="og:url" content="https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html" />
+    <meta property="article:published_time" content="2017-06-03T00:00:00.000Z" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Vue2.0+ElementUI+PageHelper实现的表格分页" />
+    <meta name="twitter:description" content="前言 最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种： Spring SpringMVC Mybatis VueJS 2.0 ElementUI 后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，" />
+    <meta name="twitter:url" content="https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "author": {
+        "@type": "Person",
+        "name": "tjfy1992",
+        "image": "https://avatars2.githubusercontent.com/u/28139994?v=3",
+        "url": "https://tjfy1992.github.io/author/tjfy1992/"
+    },
+    "headline": "Vue2.0+ElementUI+PageHelper实现的表格分页",
+    "url": "https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html",
+    "datePublished": "2017-06-03T00:00:00.000Z",
+    "description": "前言 最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种： Spring SpringMVC Mybatis VueJS 2.0 ElementUI 后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，"
+}
+    </script>
+
+    <meta name="generator" content="HubPress" />
+    <link rel="alternate" type="application/rss+xml" title="" href="https://tjfy1992.github.io/rss/" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/atom-one-dark.min.css">
+</head>
+<body class="post-template nav-closed">
+
+    
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Vue2.0+ElementUI+PageHelper实现的表格分页</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2017-06-03">03 June 2017</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div class="sect2">
+<h3 id="__">前言</h3>
+<div class="paragraph">
+<p>最近做了一些前端的项目，要对表格进行一些分页显示。表格分页的方法有很多，从宏观上来说分为物理分页和逻辑分页，由于逻辑分页（即前端分页）的做法是将数据全部缓存，然后分页显示，这样在数据量较大的时候会对浏览器的速度产生影响，所以考虑之后我使用了后端分页，后端分页的特点是对当前页的数据进行请求，每次当页码变化或者每页数据量变化的时候，就重新发一次请求。这里所用到的技术主要有以下几种：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Spring</strong></p>
+</li>
+<li>
+<p><strong>SpringMVC</strong></p>
+</li>
+<li>
+<p><strong>Mybatis</strong></p>
+</li>
+<li>
+<p><strong>VueJS 2.0</strong></p>
+</li>
+<li>
+<p><strong>ElementUI</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>后端数据库用的是Mysql，其实使用其他的数据库也可以，因为PageHelper插件里有对于各个数据库的兼容。PageHelper的本质是插入一个Interceptor，在mybatis的sql语句执行之前进行分页处理，本质上是加了两个limit的参数。对于PageHelper的配置和用法，请参考joker_zhou写的[Spring + Mybatis 使用 PageHelper 插件分页][1]这篇文章，这里不再赘述。</p>
+</div>
+<div class="paragraph">
+<p>前端所使用的是最近很火的vuejs框架2.0，这是一个mvvm架构的框架，类似于AngularJS，但是更加轻量。UI框架使用的是由饿了么团队推出的elementUI框架，这是一款基于vuejs的框架，正好和我们的前端框架完美结合，并且封装了很多组件，开发起来很方便。
+下面就是这个Demo的截图，实现了基本的增删改查功能，表格排序是elementUI的表格控件里自带的一个属性，可以很方便的设置。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">正文</h3>
+<div class="paragraph">
+<p>下面是程序的截图，右键在新标签页中打开图片可以看得清楚些。
+&lt;center&gt;
+(<a href="http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" class="bare">http://img.blog.csdn.net/20170419115058079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjkwNzA0OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast</a>)
+&lt;center&gt;</p>
+</div>
+<div class="paragraph">
+<p>下面来看一下前端的代码，首先是引入的文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>	&lt;link rel="stylesheet" href="/core/element-ui/lib/theme-default/index.css"&gt;
+	&lt;script src="./js/jquery-3.1.1.min.js"&gt;&lt;/script&gt;
+	&lt;script src="./js/json2.js"&gt;&lt;/script&gt;
+	&lt;script src="./js/vue.min.js"&gt;&lt;/script&gt;
+	&lt;script src="./js/vue-resource.js"&gt;&lt;/script&gt;
+	&lt;script src="./element-ui/lib/index.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>其中第一行和最后一行是ElementUI的导入包，可以从[ElementUI官网][2]下载到源文件引入，也可以直接使用CDN的方式来引入：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;!-- 引入样式 --&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css"&gt;
+&lt;!-- 引入组件库 --&gt;
+&lt;script src="https://unpkg.com/element-ui/lib/index.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>倒数第二行vue-resource是vuejs的一个ajax插件，可以通过XMLHttpRequest或JSONP发起请求并处理响应。简单的说，就是可以用来发送ajax请求。</p>
+</div>
+<div class="paragraph">
+<p>接下来是style样式</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>	&lt;style&gt;
+	  .el-select .el-input {
+	    width: 110px;
+	  }
+
+  	  .el-table .info-row {
+    		background: #c9e5f5;
+      }
+
+      #top {
+	      background:#20A0FF;
+	      padding:5px;
+	      overflow:hidden
+      }
+	&lt;/style&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HTML body</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    &lt;div id="test"&gt;
+
+		&lt;div id="top"&gt;
+			&lt;span style="float:right;"&gt;
+				&lt;el-button type="text" @click="add" style="color:white"&gt;添加&lt;/el-button&gt;
+				&lt;el-button type="text" @click="deletenames" style="color:white"&gt;批量删除&lt;/el-button&gt;
+			&lt;/span&gt;
+		&lt;/div&gt;
+
+
+		&lt;br/&gt;
+
+        &lt;div style="margin-top:15px"&gt;
+           &lt;el-input placeholder="请输入内容" v-model="criteria" style="padding-bottom:10px;"&gt;
+			  &lt;el-select v-model="select" slot="prepend" placeholder="请选择"&gt;
+			     &lt;el-option label="id" value="1"&gt;&lt;/el-option&gt;
+			     &lt;el-option label="name" value="2"&gt;&lt;/el-option&gt;
+			  &lt;/el-select&gt;
+			  &lt;el-button slot="append" icon="search" v-on:click="search"&gt;&lt;/el-button&gt;
+		  &lt;/el-input&gt;
+
+		  &lt;el-table
+		    ref="testTable"
+		    :data="tableData"
+		    style="width:100%"
+		    border
+		    :default-sort = "{prop: 'id', order: 'ascending'}"
+		    @selection-change="handleSelectionChange"
+		    @row-click="handleclick"
+		    :row-class-name = "tableRowClassName"
+		    &gt;
+		    &lt;el-table-column
+		      type="selection"
+		      &gt;
+		    &lt;/el-table-column&gt;
+		    &lt;el-table-column
+		      prop="id"
+		      label="Id"
+		      sortable
+		      show-overflow-tooltip&gt;
+		    &lt;/el-table-column&gt;
+		    &lt;el-table-column
+		      prop="name"
+		      label="姓名"
+		      sortable&gt;
+		    &lt;/el-table-column&gt;
+	        &lt;el-table-column label="操作"&gt;
+		      &lt;template scope="scope"&gt;
+		        &lt;el-button
+		          size="small"
+		          type="primary"
+		          @click="handleEdit(scope.$index, scope.row)"&gt;编辑&lt;/el-button&gt;
+		        &lt;el-button
+		          size="small"
+		          type="danger"
+		          @click="handleDelete(scope.$index, scope.row)"&gt;删除&lt;/el-button&gt;
+		      &lt;/template&gt;
+		    &lt;/el-table-column&gt;
+		  &lt;/el-table&gt;
+
+		  &lt;div align="center"&gt;
+			  &lt;el-pagination
+			      @size-change="handleSizeChange"
+			      @current-change="handleCurrentChange"
+			      :current-page="currentPage"
+			      :page-sizes="[10, 20, 30, 40]"
+			      :page-size="pagesize"
+			      layout="total, sizes, prev, pager, next, jumper"
+			      :total="totalCount"&gt;
+			  &lt;/el-pagination&gt;
+		  &lt;/div&gt;
+		&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;footer align="center"&gt;
+        &lt;p&gt;&amp;copy; Vue.js 2.0 + ElementUI分页Demo&lt;/p&gt;
+    &lt;/footer&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来是比较重要的创建vue实例。这里使用ES5的写法。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>	&lt;script&gt;
+	var vue = new Vue({
+			el:"#test",
+		    data: {
+		    	//表格当前页数据
+		    	tableData: [],
+
+		    	//多选数组
+		        multipleSelection: [],
+
+		        //请求的URL
+		        url:'newstu/querystudentbypage',
+
+		        //搜索条件
+		        criteria: '',
+
+		        //下拉菜单选项
+		        select: '',
+
+		        //默认每页数据量
+		        pagesize: 10,
+
+		        //默认高亮行数据id
+		        highlightId: -1,
+
+		        //当前页码
+		        currentPage: 1,
+
+		        //查询的页码
+		        start: 1,
+
+		        //默认数据总数
+		        totalCount: 1000,
+		    },
+
+		    methods: {
+
+		        //从服务器读取数据
+				loadData: function(criteria, pageNum, pageSize){
+					this.$http.get(this.url,{parameter:criteria, pageNum:pageNum, pageSize:pageSize}).then(function(res){
+                		this.tableData = res.data.pagestudentdata;
+                		this.totalCount = res.data.number;
+                	},function(){
+                  		console.log('failed');
+                	});
+				},
+
+				//多选响应
+			    handleSelectionChange: function(val) {
+			        this.multipleSelection = val;
+			    },
+
+			    //点击行响应
+			    handleclick: function(row, event, column){
+			    	this.highlightId = row.id;
+			    },
+
+			    //编辑
+				handleEdit: function(index, row) {
+				    this.$prompt('请输入新名称', '提示', {
+		                  confirmButtonText: '确定',
+		                  cancelButtonText: '取消',
+		                }).then(({ value }) =&gt; {
+		                	if(value==''||value==null)
+		        				return;
+		        			this.$http.post('newstu/update',{"id":row.id,"name":value},{emulateJSON: true}).then(function(res){
+		        				this.loadData(this.criteria, this.currentPage, this.pagesize);
+		                    },function(){
+		                        console.log('failed');
+		                    });
+		                }).catch(() =&gt; {
+
+		            });
+		        },
+
+
+		        //单行删除
+			    handleDelete: function(index, row) {
+			        var array = [];
+		        	array.push(row.id);
+					this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
+						this.loadData(this.criteria, this.currentPage, this.pagesize);
+		            },function(){
+		                console.log('failed');
+		            });
+		        },
+
+		        //搜索
+		        search: function(){
+		        	this.loadData(this.criteria, this.currentPage, this.pagesize);
+		        },
+
+		        //添加
+		        add: function(){
+		                this.$prompt('请输入名称', '提示', {
+		                  confirmButtonText: '确定',
+		                  cancelButtonText: '取消',
+		                }).then(({ value }) =&gt; {
+		                	if(value==''||value==null)
+		        				return;
+		        			this.$http.post('newstu/add',{"name":value},{emulateJSON: true}).then(function(res){
+		        				this.loadData(this.criteria, this.currentPage, this.pagesize);
+		                    },function(){
+		                        console.log('failed');
+		                    });
+		                }).catch(() =&gt; {
+
+		            });
+
+		        },
+
+		        //多项删除
+		        deletenames: function(){
+		        	if(this.multipleSelection.length==0)
+		        		return;
+		        	var array = [];
+		        	this.multipleSelection.forEach((item) =&gt; {
+		        		array.push(item.id);
+			        })
+					this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
+						this.loadData(this.criteria, this.currentPage, this.pagesize);
+		            },function(){
+		                console.log('failed');
+		            });
+		        },
+
+		        //改变当前点击的行的class，高亮当前行
+		        tableRowClassName: function(row, index){
+		    	   if(row.id == this.highlightId)
+		    	   {
+		    		  return 'info-row';
+		    	   }
+		        },
+
+		        //每页显示数据量变更
+		        handleSizeChange: function(val) {
+		            this.pagesize = val;
+		            this.loadData(this.criteria, this.currentPage, this.pagesize);
+		        },
+
+		        //页码变更
+		        handleCurrentChange: function(val) {
+		            this.currentPage = val;
+		            this.loadData(this.criteria, this.currentPage, this.pagesize);
+		        },
+
+		    },
+
+
+		  });
+
+		  //载入数据
+    	  vue.loadData(vue.criteria, vue.currentPage, vue.pagesize);
+	&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在对上述代码进行一个简单的解释，tableData是表格当前页所显示的数据的数组，当网页加载出来后，首先执行loadData方法，criteria是当前的搜索条件，默认为空，第二个参数是当前页码，默认为第一页，第三个参数为偏移量，即想查询的数量，也就是当前每页所含有的数据量。当页码或每页数据量改变时都会以这些参数的新值作为参数重新调用这个方法。我们可以看一下Controller的代码：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">	@ResponseBody
+	@RequestMapping(value = "/querystudentbypage", method = RequestMethod.GET)
+    public Map&lt;String, Object&gt; querystudentbypage(@RequestParam(value="parameter")String parameter,
+    		@RequestParam(value="pageNum")int pageNum, @RequestParam(value="pageSize")int pageSize)
+	{
+		Page&lt;Student&gt; page = iNewStudentService.selectStudents(parameter, pageNum, pageSize);
+		Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+		map.put("pagestudentdata", page);
+		map.put("number", page.getTotal());
+		return map;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>还有service的实现代码：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">	public Page&lt;Student&gt; selectStudents(String parameter, int pageNum, int pageSize)
+	{
+		Page&lt;Student&gt; page = PageHelper.startPage(pageNum, pageSize);
+		newstudentMapper.selectStudents(parameter);
+		return page;
+	}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>mybatis的代码</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    &lt;select id="selectStudents" resultMap="NewStudentResultMap"&gt;
+    	select id,name from student where id=#{parameter} or name like CONCAT('%',#{parameter},'%')
+    &lt;/select&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>注：为了代码的简便，这里对用户的输入进行了模糊处理，数据表中的id字段等于用户的输入或name字段包含了用户的输入都可以被查询出来。</p>
+</div>
+<div class="paragraph">
+<p>从上面的service实现类和mabatis的代码中可以看出，<strong>我们并没有手动去给sql语句加limit，而是在newstudentMapper.selectStudents(parameter);这句代码之前加入了Page&lt;Student&gt; page = PageHelper.startPage(pageNum, pageSize);这句代码就是对PageHelper的调用，不需要去管PageHelper如何去实现（实际是通过Interceptor），只需要这一句代码就可以做出物理分页。它会对紧跟在它后面的一个sql查询起作用，并且返回分页后的当页代码。</strong>
+Controller中的map我们可以看到put了两个值，一个是返回的List，另一个是数据总量。前端的表格控件会用到这个LIst，而分页控件会用到这个数据总量。<strong>注意startPage的参数，第一个是想要请求的页码，第二个是请求页的数据量。这两个要与前端请求时发送的参数相对应。</strong></p>
+</div>
+<div class="paragraph">
+<p>程序的其他基本功能包括添加、修改、删除、批量删除等，前端的代码都做了解释，后端也只是单纯的调数据库而已，这里就不再贴上后端的代码。</p>
+</div>
+<div class="paragraph">
+<p>注：
+表格行点击高亮功能在ElementUI的表格控件中通过添加highlight-current-row属性可以设置，不过高亮的颜色被封装到了css文件里。我这里没有用到这个属性，而是自定义了一个class的style，当点击某行时把自定义的style赋给当前行。如果对ElementUI本身的高亮颜色不满意又不想去改css文件的话，可以像文中这种方式自定义一个行点击响应。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">写在最后的话</h3>
+<div class="paragraph">
+<p>vuejs作为一个前端控件，在最近几年越来越受欢迎，它的社区很活跃，同时又有大量的开源项目库与之配套，详细列表请参考[Vue 开源项目库汇总][3]。如果将vuejs与开源库整合使用，将大大提升前端开发效率，尤其是对于像我这样对前端并不是很熟悉的后端工程师，也是可以对照着官网上面的教程和例子进行前端开发。如果使用ES6的写法，那么模块化会更加轻松。</p>
+</div>
+<div class="paragraph">
+<p>ElementUI也是一套很不错的组件库，对于我们经常用到的表格、表单、时间日期选择器等常用组件都有着很好的封装和接口。</p>
+</div>
+<div class="paragraph">
+<p>PageHelper作为一个国人写的mybatis分页插件，有着相当不错的表现，并且支持当前所有的主流数据库，使用起来也很方便。</p>
+</div>
+<div class="paragraph">
+<p>前端开发所需要学习的东西并不比后端开发少多少，而且更需要一个经验的积累，在此记录一下学习前端开发的历程。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[1]: http://blog.csdn.net/joker_zhou/article/details/50418005
+[2]: http://element.eleme.io/#/zh-CN/component/installation
+[3]: http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551975&amp;idx=1&amp;sn=7eb0e564b8c451b9662e174913de303f&amp;chksm=8025af26b75226300164df811736abe65dac6cb3597cea86a809c2352d2459a16068d4e00b13&amp;mpshare=1&amp;scene=1&amp;srcid=0414nRm1dVPE7iutDEJt0SDJ#rd</pre>
+</div>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="https://tjfy1992.github.io/author/tjfy1992/" style="background-image: url(https://avatars2.githubusercontent.com/u/28139994?v&#x3D;3)"><span class="hidden">tjfy1992's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="https://tjfy1992.github.io/author/tjfy1992/">tjfy1992</a></h4>
+
+                    <p>Read <a href="https://tjfy1992.github.io/author/tjfy1992/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Vue2.0%2BElementUI%2BPageHelper%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%A1%A8%E6%A0%BC%E5%88%86%E9%A1%B5&amp;url=https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://tjfy1992.github.io/2017/06/03/Vue20-ElementUI-Pge-Helper.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="https://tjfy1992.github.io"></a> &copy; 2017</section>
+            <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();
+      </script>
+       
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+    <script type="text/javascript" src="//tjfy1992.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1496468269967"></script>
+    <script type="text/javascript" src="//tjfy1992.github.io/themes/casper/assets/js/index.js?v=1496468269967"></script>
+
+</body>
+</html>
